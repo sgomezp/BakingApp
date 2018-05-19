@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    tools:context=".ui.DetailActivity">
+
+    <!--
+   This layout is a two-pane layout for the master/detail flow.
+   -->
+    <!-- The static MasterListFragment -->
+    <fragment
+        android:id="@+id/master_list_fragment"
+        android:name="com.example.android.bakingapp.ui.MainFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <!-- A small divider -->
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/darker_gray" />
+
+    <!-- LinearLayout that arranges the video and steps-->
+
+    <LinearLayout
+        android:id="@+id/android_me_linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:id="@+id/video_steps_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_margin" />
+
+
+    </LinearLayout>
+</LinearLayout>

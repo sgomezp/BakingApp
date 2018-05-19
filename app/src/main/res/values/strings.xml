@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Baking App</string>
+    <string name="servings">Servings:</string>
+    <string name="servings_unavailable">Servings unavailable</string>
+    <string name="recipes_s_image">Recipes\'s image</string>
+
+    <string name="servings_text">Servings: %1$d</string>
+    <string name="no_video_description">No video for this recipe</string>
+</resources>
