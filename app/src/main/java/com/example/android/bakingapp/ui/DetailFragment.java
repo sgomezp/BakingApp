@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 
-import butterknife.BindView;
 import timber.log.Timber;
 
 public class DetailFragment extends Fragment {
@@ -19,8 +18,8 @@ public class DetailFragment extends Fragment {
 
     }
 
-    @BindView(R.id.tv_step)
-    TextView mtvStep;
+    /*@BindView(R.id.tv_step)
+    TextView mtvStep;*/
 
     /*@BindView(R.id.playerview_recipe_video)
     SimpleExoPlayerView mPlayerRecipeVideo;
@@ -31,10 +30,13 @@ public class DetailFragment extends Fragment {
     @BindView(R.id.layout_video_steps_details)
     LinearLayout mLayoutVideoStepsDetails;*/
 
+    private TextView mtvStep;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater  inflater, ViewGroup container, Bundle savedInstanceState){
-        View rootView = inflater.inflate(R.layout.fragment_video_steps, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_details, container, false);
+        mtvStep = (TextView) rootView.findViewById(R.id.tv_step);
         if (getArguments() != null){
             String text = getArguments().getString("ARGUMENTS");
             Timber.d("text: " + text);

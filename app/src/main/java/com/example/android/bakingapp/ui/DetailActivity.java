@@ -19,13 +19,13 @@ import timber.log.Timber;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        if(findViewById(R.id.video_steps_container)!= null){
+        if(findViewById(R.id.container)!= null){
             mTabletMode = true;
             DetailFragment detailFragment = new DetailFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
-                    .add(R.id.video_steps_container, detailFragment)
+                    .replace(R.id.container, detailFragment)
                     .commit();
         }
     }
@@ -42,7 +42,7 @@ import timber.log.Timber;
         DetailFragment detailFragment = new DetailFragment();
         detailFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.video_steps_container, detailFragment)
+                .replace(R.id.container, detailFragment)
                 .commit();
     }
 }

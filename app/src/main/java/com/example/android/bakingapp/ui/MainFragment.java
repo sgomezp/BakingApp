@@ -14,6 +14,7 @@ import com.example.android.bakingapp.R;
 public class MainFragment extends Fragment {
     private MainActivity mParentActivity;
     private Boolean mTablet;
+    private TextView mTvIngredients;
 
     // Empty Constructor
     public MainFragment(){}
@@ -30,26 +31,33 @@ public class MainFragment extends Fragment {
 
        // mParentActivity = (MainActivity) getActivity();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        TextView mTvTextFragment = (TextView) rootView.findViewById(R.id.tv_text_fragment_main);
+        //TextView mTvTextFragment = (TextView) rootView.findViewById(R.id.tv_text_fragment_main);
+
+        mTvIngredients = (TextView) rootView.findViewById(R.id.tv_ingredients);
 
 
-        mTablet = ((DetailActivity) getActivity()).isTablet();
+        mTvIngredients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTablet = ((DetailActivity) getActivity()).isTablet();
+                if (!mTablet){
+                    // This is phone mode, create an intent to launch DetailActivity. Attach EXTRA
+                    //Intent intent = new Intent(getActivity(), DetailsActivitySteps.class);
+                    Intent intent = new Intent(getActivity(), DetailsActivitySteps.class);
+                    intent.putExtra("EXTRA", "this fragment es para los videos");
+                    startActivity(intent);
+                } else {
+                    // This is table mode, tell DetailsActivity to replace the fragment in Container
+                    ((DetailActivity) getActivity()).replaceFragment();
 
-        if (!mTablet){
-            // This is phone mode, create an intent to launch DetailActivity. Attach EXTRA
-            //Intent intent = new Intent(getActivity(), DetailsActivitySteps.class);
-            Intent intent = new Intent(getActivity(), DetailsActivitySteps.class);
-            //intent.putExtra("EXTRA", "this fragment es para listado de ingredientes");
-            startActivity(intent);
-        } else {
-            // This is table mode, tell DetailsActivity to replace the fragment in Container
-            ((DetailActivity) getActivity()).replaceFragment();
+                }
 
-        }
-        mTvTextFragment.setText("Esta es la lista de recetas y steps");
+            }
+        });
+
+        //mTvTextFragment.setText("Esta es la lista de recetas y steps");
         return rootView;
 
     }
-
 
 }
