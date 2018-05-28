@@ -1,8 +1,11 @@
 package com.example.android.bakingapp.model;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+public class Ingredient extends RecyclerView.ViewHolder {
 
     @SerializedName("quantity")
     private float quantity;
@@ -19,9 +22,9 @@ public class Ingredient {
      * No args constructor for use in serialization
      *
      */
-    public Ingredient(){
+    //public Ingredient(View view){
 
-    }
+    // }
 
     /**
      *
@@ -29,8 +32,8 @@ public class Ingredient {
      * @param ingredient
      * @param quantity
      */
-    public Ingredient(float quantity, String measure, String ingredient){
-        super();
+    public Ingredient(View v, float quantity, String measure, String ingredient) {
+        super(v);
         this.quantity = quantity;
         this.measure = measure;
         this.ingredient = ingredient;

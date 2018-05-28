@@ -1,8 +1,11 @@
 package com.example.android.bakingapp.model;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step extends RecyclerView.ViewHolder {
 
     @SerializedName("id")
     private int id;
@@ -23,8 +26,8 @@ public class Step {
      * No args constructor for use in serialization
      *
      */
-    public Step() {
-    }
+   /* public Step() {
+    }*/
 
     /**
      *
@@ -34,8 +37,8 @@ public class Step {
      * @param videoURL
      * @param thumbnailURL
      */
-    public Step(int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
-        super();
+    public Step(View v, int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+        super(v);
         this.id = id;
         this.shortDescription = shortDescription;
         this.description = description;

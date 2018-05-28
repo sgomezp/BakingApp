@@ -51,15 +51,15 @@ public class MainActivity extends AppCompatActivity {
         //Load recipe data
         loadRecipeData();
 
-
-
     }
 
     private void loadRecipeData() {
 
         try{
+            Timber.d("Estoy dentro del Try en loadRecipeData en MainActivity");
             ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<ArrayList<Recipe>> call = apiService.getRecipe();
+            Timber.d("call: " + call);
 
             call.enqueue(new Callback<ArrayList<Recipe>>() {
                 @Override

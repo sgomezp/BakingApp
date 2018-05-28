@@ -6,4 +6,6 @@
 
     <string name="servings_text">Servings: %1$d</string>
     <string name="no_video_description">No video for this recipe</string>
+
+    <string name="label_read_more">Read more</string>
 </resources>
