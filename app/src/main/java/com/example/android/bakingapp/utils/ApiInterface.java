@@ -17,6 +17,4 @@ public interface ApiInterface {
     Call<ArrayList<Step>> getSteps();
 
 
-
-
 }

@@ -43,7 +43,7 @@ public class Recipe {
      */
     public Recipe(int id, String name, List<Ingredient> ingredients,
                   List<Step> steps, int servings, String image){
-        super();
+        //super();
         this.id = id;
         this.name = name;
         this.ingredients = ingredients;
