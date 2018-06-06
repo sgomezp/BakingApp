@@ -14,30 +14,44 @@ import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class IngredientStepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_INGREDIENTS = 0;
     private final int VIEW_TYPE_STEPS = 1;
 
+
+    // CAmbio ArrayList por List<>
+
     private Recipe mRecipes;
-    private ArrayList<Step> mStepList;
-    private ArrayList<Ingredient> mIngredientList;
+    private List<Step> mStepList;
+    private List<Ingredient> mIngredientList;
     private Context mContext;
     private int mGridLayout;
+    private ArrayList<Recipe> mRecipeList;
 
 
-    public IngredientStepAdapter(Recipe recipes, ArrayList<Step> steps, ArrayList<Ingredient> ingredients,
+    public IngredientStepAdapter(Recipe recipe, List<Step> steps, List<Ingredient> ingredients,
                                  int gridLayout, Context context) {
-        mRecipes = recipes;
+        mRecipes = recipe;
         mStepList = steps;
         mIngredientList = ingredients;
         mGridLayout = gridLayout;
         mContext = context;
     }
+
+    /*public IngredientStepAdapter(Recipe recipes,  List<Ingredient> ingredients,
+                                 int gridLayout, Context context) {
+        mRecipes = recipes;
+        mIngredientList = ingredients;
+        mGridLayout = gridLayout;
+        mContext = context;
+    }*/
 
     @Override
     public int getItemViewType(int position) {
@@ -73,6 +87,11 @@ public class IngredientStepAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
+        Timber.d("VIEW_TYPE_INGREDIENTS: " + VIEW_TYPE_INGREDIENTS);
+        Timber.d("VIEW_TYPE_STEPS: " + VIEW_TYPE_STEPS);
+        Timber.d("getItemViewType: " + holder.getItemViewType());
+        Timber.d("Position: " + position);
+
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_INGREDIENTS:
                 ViewHolderIngredient viewHolderIngredient = (ViewHolderIngredient) holder;
@@ -88,16 +107,19 @@ public class IngredientStepAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return 1 + mIngredientList.size() + mStepList.size();
+        Timber.d("mIngredientList: " + mIngredientList);
+        Timber.d("mStepList: " + mStepList);
+        // 1 + mIngredientList.size() + mStepList.size();
+        return 1 /*+  mStepList.size() + mIngredientList.size()*/;
     }
 
     // Replace the contents of a view (invoke by the layout manager)
-    public void updateRecyclerSteps(ArrayList<Step> newSteps) {
+    public void updateRecyclerSteps(List<Step> newSteps) {
         mStepList = newSteps;
         notifyDataSetChanged();
     }
 
-    public void updateRecyclerIngredients(ArrayList<Ingredient> newIngredients) {
+    public void updateRecyclerIngredients(List<Ingredient> newIngredients) {
         mIngredientList = newIngredients;
         notifyDataSetChanged();
     }
@@ -118,9 +140,12 @@ public class IngredientStepAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(itemView);
             ButterKnife.bind(this, itemView);
 
+
         }
 
+
         public void bindViews(int position) {
+            Timber.d("Position dentro de BindViews: " + position);
             Ingredient ingredients = mIngredientList.get(position);
             float quantity = ingredients.getQuantity();
             String measure = ingredients.getMeasure();

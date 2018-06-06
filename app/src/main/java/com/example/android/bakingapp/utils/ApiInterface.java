@@ -1,5 +1,6 @@
 package com.example.android.bakingapp.utils;
 
+import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 
@@ -15,6 +16,9 @@ public interface ApiInterface {
 
     @GET("baking.json")
     Call<ArrayList<Step>> getSteps();
+
+    @GET("baking.json")
+    Call<ArrayList<Ingredient>> getIngredients();
 
 
 }

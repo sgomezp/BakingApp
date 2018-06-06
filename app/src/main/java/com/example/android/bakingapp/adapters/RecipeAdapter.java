@@ -30,13 +30,6 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
     private Context mContext;
     private int mGridLayout;
 
-
-
-    // OnClick Handler for the adapter that handles when a single item is clicked
-    /*public RecipeAdapter(RecipeListOnClickHandler onClickHandler){
-         mOnClickHandler = onClickHandler;
-    }*/
-
     public RecipeAdapter(ArrayList<Recipe> recipes, int gridLayout, Context context){
         mRecipeList = recipes;
         mGridLayout = gridLayout;
@@ -107,15 +100,7 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
         }
     }
 
-    /**
-     * Method used to refresh the list once the adapter is already created, to avoid creating a new one
-     */
 
-    /*public void refreshRecipeData(ArrayList<Recipe> recipeList){
-        Timber.d("Aqui estoy");
-        mRecipeList = recipeList;
-        notifyDataSetChanged();
-    }*/
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -148,6 +133,7 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
         public void onClick(View view) {
             // gets item position
             int position = getAdapterPosition();
+            Recipe recipe = mRecipeList.get(position);
             // Check if an item was deleted, but user clicked it before the UI removed it
             // We can access the data within the views
             if (position != RecyclerView.NO_POSITION){
@@ -155,7 +141,18 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
                 //Intent intent = new Intent(mContext, DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 //intent.putExtra("position", position);
-                intent.putExtra("EXTRA", "vengo de Main activity");
+                Timber.d("position que estoy pasando: " + position);
+
+                // dataIngredients = new Bundle();
+                //dataIngredients.putInt("position",position);
+                //dataIngredients.putParcelable("mRecipeList", mRecipeList);
+
+
+                intent.putExtra("position", position);
+
+                Timber.d("mRecipelist que paso es: " + recipe);
+                Timber.d("mRecipeList is: " + recipe.toString());
+                intent.putExtra("mRecipeList", recipe);
                 mContext.getApplicationContext().startActivity(intent);
                 //mContext.startActivity(intent);
 

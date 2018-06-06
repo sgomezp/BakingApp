@@ -8,4 +8,5 @@
     <string name="no_video_description">No video for this recipe</string>
 
     <string name="label_read_more">Read more</string>
+    <string name="display_ingredient">%1$s\\u0020\\u0020\\u0028%2$s\\u0020%3$s\\u0029\\n</string>
 </resources>

@@ -22,13 +22,12 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     RecipeAdapter.ViewHolder mAdapter;
     RecipeAdapter mRecipeAdapter;
-    public static ArrayList<Recipe> mRecipeList;
+    public ArrayList<Recipe> mRecipeList;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+
     /*Resources res = getResources();
     int numbersOfColumns = res.getInteger(R.integer.list_columns);*/
 
@@ -49,14 +48,28 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Load recipe data
-        loadRecipeData();
+
+        mRecipeList = loadRecipeData();
+        Timber.d("mRecipeList: " + mRecipeList);
+
+
+
 
     }
 
-    private void loadRecipeData() {
+    public void displayRecipeList(ArrayList<Recipe> recipeList) {
+
+        for (int i = 0; i < recipeList.size(); i++) {
+            Timber.d("i= " + i);
+            Timber.d("recipeList: " + recipeList.toString());
+        }
+
+    }
+
+    private ArrayList<Recipe> loadRecipeData() {
 
         try{
-            Timber.d("Estoy dentro del Try en loadRecipeData en MainActivity");
+
             ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
             Call<ArrayList<Recipe>> call = apiService.getRecipe();
             Timber.d("call: " + call);
@@ -68,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                     if (response.isSuccessful()){
                        mRecipeList = response.body();
+                        Timber.d("Entré en el if de response ");
 
                        if (mRecipeAdapter == null){
                            recyclerView.setAdapter(new RecipeAdapter(mRecipeList,
@@ -77,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                            mRecipeAdapter.updateRecyclerData(mRecipeList);
                            mRecipeAdapter.notifyDataSetChanged();
                        }
+
 
                     } else {
                         Timber.d("onResponse: StatusCode; " + statusCode);
@@ -92,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (NotYetConnectedException e){
             Timber.d("loadRecipeData: No connectivity: " + e.getMessage());
         }
+        return mRecipeList;
     }
 
 
