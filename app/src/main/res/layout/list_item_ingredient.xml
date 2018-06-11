@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <TableRow
-        android:id="@+id/table_row_ingredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        android:orientation="horizontal">
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/table_row_ingredients"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_10"
+    android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_ingredient_quantity"
@@ -37,14 +33,9 @@
             tools:text="Granulate sugar" />
     </TableRow>
 
-    <TextView
-        android:id="@+id/short_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
-        tools:text="Short description Step" />
 
-</LinearLayout>
+
+
 
 
 

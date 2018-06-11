@@ -17,7 +17,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
 
@@ -40,28 +39,25 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.fragment_main, parent, false);
+        View view = inflater.inflate(R.layout.list_item_ingredient, parent, false);
         return new IngredientAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
 
-        Timber.d("Position Ingredient: " + position);
+
         Ingredient ingredients = mIngredientList.get(position);
-        Timber.d("ingredients:" + ingredients.toString());
         String ingredientName = ingredients.getIngredient();
-        Timber.d("Ingredients IngredientName: " + ingredientName);
         float quantity = ingredients.getQuantity();
-        Timber.d("Ingredients quantity: " + quantity);
         String measure = ingredients.getMeasure();
-        Timber.d("Ingredients measure: " + measure);
+
 
         // Settter Ingredients fields
-        holder.tvIngredients.setText(ingredients.toString());
-        /*holder.tvIngredientQuantity.setText(String.valueOf(quantity));
+        //holder.tvIngredients.setText(ingredients.toString());
+        holder.tvIngredientQuantity.setText(String.valueOf(quantity));
         holder.tvIngredientName.setText(ingredientName);
-        holder.tvMeasureIngredient.setText(measure);*/
+        holder.tvMeasureIngredient.setText(measure);
 
 
     }
@@ -86,17 +82,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
         View gridLayout;
 
-        @BindView(R.id.tv_ingredients)
-        TextView tvIngredients;
+        /*@BindView(R.id.tv_ingredients)
+        TextView tvIngredients;*/
 
-        /*@BindView(R.id.tv_ingredient_quantity)
+        @BindView(R.id.tv_ingredient_quantity)
         TextView tvIngredientQuantity;
 
         @BindView(R.id.tv_measure_ingredient)
         TextView tvMeasureIngredient;
 
         @BindView(R.id.tv_ingredient_name)
-        TextView tvIngredientName;*/
+        TextView tvIngredientName;
 
 
         public ViewHolder(View itemView) {

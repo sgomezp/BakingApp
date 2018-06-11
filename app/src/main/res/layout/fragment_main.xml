@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_10"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tv_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Aqui va el listado de ingredientes" />
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_ingredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:orientation="vertical">
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_ingredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
-            tools:text="Recipe Ingredients" />
+    </android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+        android:id="@+id/steps_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_ingredients_steps"
@@ -27,6 +36,10 @@
 
         </android.support.v7.widget.RecyclerView>
 
+    </FrameLayout>
+
+</LinearLayout>
+
         <!--<TextView
             android:id="@+id/tv_ingredients"
             android:text="List of step and Ingredients"
@@ -34,5 +47,5 @@
             android:layout_height="wrap_content"/>-->
         <!---->
 
-    </LinearLayout>
-</ScrollView>
+
+

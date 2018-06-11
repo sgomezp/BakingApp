@@ -3,6 +3,7 @@ package com.example.android.bakingapp.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +21,6 @@ import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.ApiClient;
 import com.example.android.bakingapp.utils.ApiInterface;
-import com.example.android.bakingapp.utils.Constants;
 
 import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
@@ -42,18 +42,22 @@ public class MainFragment extends Fragment {
     private Boolean mTablet;
     public StepAdapter mStepAdapter;
     public IngredientAdapter mIngredientAdapter;
-    //public Recipe mRecipes;
-    public ArrayList<Recipe> mRecipeList;
+
+
     public List<Step> mSteps;
-    public Integer mSelectedStepId;
-    //public ArrayList<Ingredient> mIngredients;
-    public Recipe mSelectedRecipe;
-    //RecyclerView recyclerView = null;
+    public Recipe recipeSelected = null;
+
     RecyclerView.LayoutManager layoutManager;
+
     @BindView(R.id.tv_ingredients)
     TextView mTvIngredients;
+
+    //@BindView(R.id.rv_ingredients)
+    RecyclerView recyclerViewIngredients;
+
     @BindView(R.id.rv_ingredients_steps)
     RecyclerView recyclerView;
+
     @BindString(R.string.display_ingredient)
     String mDisplayIngredient;
     // Define a new interface OnStepClickListener that triggers a callback in the host activity
@@ -79,63 +83,38 @@ public class MainFragment extends Fragment {
         }
     }
 
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //mParentActivity = (MainActivity) getActivity();
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        //displayRecipeIngredients();
+
+        recyclerViewIngredients = rootView.findViewById(R.id.rv_ingredients);
+        Bundle dataIngredients = getArguments();
+        recipeSelected = dataIngredients.getParcelable("dataIngredients");
+        mIngredients = recipeSelected.getIngredients();
 
 
-        Timber.d("getArguments: " + getArguments());
-
-        if (getArguments() != null) {
-            ArrayList<Recipe> recipes = getArguments().getParcelableArrayList(Constants.INTENT_KEY_SELECTED_RECIPE);
-            mSelectedStepId = getArguments().getInt(Constants.INTENT_KEY_SELECTED_STEP);
-            mSelectedRecipe = recipes.get(0);
-
-            Timber.d("mSelectedStepId: " + mSelectedStepId);
-            Timber.d("mSelectedRecipe: " + mSelectedRecipe);
-
-            mIngredients = mSelectedRecipe.getIngredients();
-            mSteps = mSelectedRecipe.getSteps();
-
-            Timber.d("mIngredients: " + mIngredients);
-            Timber.d("mSteps: " + mSteps);
 
 
-            displayRecipeIngredients();
-        }
-
-
-        //***************************
-
-
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_ingredients_steps);
         //Resources res = getResources();
         //int numbersOfColumns = res.getInteger(R.integer.list_columns);
 
         // use a linearLayout manager
         //layoutManager = new GridLayoutManager(getContext(), numbersOfColumns);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        //layoutManager = new LinearLayoutManager(getContext());
+        //recyclerView.setLayoutManager(layoutManager);
 
         //Creates the adapter
         // This adapter takes in the context shows the ingredients and steps
 
         // Set the adapter to the RecyclerView
 
+        displayRecipeIngredients();
 
-        if (mIngredientAdapter == null) {
-            recyclerView.setAdapter(new IngredientAdapter(mIngredients,
-                    R.layout.fragment_main, getContext()));
 
-            recyclerView.setHasFixedSize(false);
-        } else {
-            mIngredientAdapter.updateRecyclerIngredients(mIngredients);
-            mIngredientAdapter.notifyDataSetChanged();
-
-        }
 
         // Set a click listener on the RecyclerView and trigger the callback onRecipeSelected
         // when an item is clicked
@@ -152,7 +131,7 @@ public class MainFragment extends Fragment {
         //mTvIngredients = (TextView) rootView.findViewById(R.id.tv_ingredients);
 
 
-        recyclerView.setOnClickListener(new View.OnClickListener() {
+        recyclerViewIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTablet = ((DetailActivity) getActivity()).isTablet();
@@ -176,7 +155,7 @@ public class MainFragment extends Fragment {
 
     }
 
-    private void displayRecipeIngredients() {
+    private void displayRecipeIngredientsOld() {
 
         StringBuilder ingredientString = new StringBuilder();
 
@@ -204,6 +183,19 @@ public class MainFragment extends Fragment {
                 R.layout.list_item_ingredient, getContext());
         recyclerView.setAdapter(mStepAdapter);
         mStepAdapter.updateRecyclerSteps(mSteps);
+
+
+    }
+
+    public void displayRecipeIngredients() {
+        layoutManager = new LinearLayoutManager(getActivity());
+        //Set the adapter
+        mIngredientAdapter = new IngredientAdapter(mIngredients,
+                R.layout.list_item_ingredient, getContext());
+        recyclerViewIngredients.setAdapter(mIngredientAdapter);
+        recyclerViewIngredients.setLayoutManager(layoutManager);
+        recyclerViewIngredients.setHasFixedSize(true);
+        mIngredientAdapter.updateRecyclerIngredients(mIngredients);
 
 
     }

@@ -5,6 +5,7 @@ public class Constants {
     public static final String INTENT_KEY_SELECTED_RECIPE = "selected_recipe";
     public static final String INTENT_KEY_SELECTED_STEP = "selected_step";
     public static final String INTENT_KEY_STEP_COUNT = "step_count";
+    public static final String RECIPE_KEY = "recipe_key";
 
 
     public static final String URL_BASE_JSON_RECIPES =

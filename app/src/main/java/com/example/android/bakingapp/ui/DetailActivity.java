@@ -1,7 +1,6 @@
 package com.example.android.bakingapp.ui;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -23,11 +22,11 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
     // A single-pane display refers to phone screens, and two-pane to larger tablet screens
 
     private Boolean mTabletMode = false;
-    public static Recipe mRecipes = new Recipe();
+    public static Recipe mRecipes;
     public static ArrayList<Step> mStepList;
     public static List<Ingredient> mIngredientList;
-    int position;
-    private Bundle dataRecipe;
+    Bundle dataIngredients = new Bundle();
+
     //public IngredientStepAdapter mStepAdapter;
     //public RecyclerView recyclerView;
 
@@ -36,27 +35,27 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        mRecipes = getIntent().getExtras().getParcelable(Constants.RECIPE_KEY);
 
-        Bundle data = getIntent().getExtras();
-        position = data.getInt("position");
-        //mIngredientList = data.getParcelable("mRecipeList");
-        mRecipes = data.getParcelable("mRecipeList");
-        Timber.d("mRecipeList: " + mRecipes);
-        //mRecipeList =
 
-        if (getIntent().getExtras() != null) {
-            dataRecipe = getIntent().getExtras();
-            mRecipes = dataRecipe.getParcelable(Constants.INTENT_KEY_SELECTED_RECIPE);
-        }
+        dataIngredients.putParcelable("dataIngredients", mRecipes);
 
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setArguments(dataIngredients);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.ingredients_framelayout, mainFragment)
+                .commit();
 
         if (findViewById(R.id.container) != null) {
             mTabletMode = true;
             DetailFragment detailFragment = new DetailFragment();
+            detailFragment.setArguments(dataIngredients);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.container, detailFragment)
+                    .add(R.id.container, detailFragment)
                     .commit();
         }
     }
@@ -71,17 +70,14 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
 
 
     public boolean isTablet() {
+
         return mTabletMode;
     }
 
     public void replaceFragment() {
         Timber.d("replace");
-
-        Bundle args = new Bundle();
-        args.putInt("position", position);
-        args.putParcelable("mRecipeList", (Parcelable) mRecipes);
         DetailFragment detailFragment = new DetailFragment();
-        detailFragment.setArguments(args);
+        detailFragment.setArguments(dataIngredients);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, detailFragment)
                 .commit();

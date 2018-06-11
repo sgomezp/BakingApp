@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.ui.DetailActivity;
+import com.example.android.bakingapp.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -143,16 +144,12 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
                 //intent.putExtra("position", position);
                 Timber.d("position que estoy pasando: " + position);
 
-                // dataIngredients = new Bundle();
-                //dataIngredients.putInt("position",position);
-                //dataIngredients.putParcelable("mRecipeList", mRecipeList);
 
-
-                intent.putExtra("position", position);
+                //intent.putExtra("position", position);
 
                 Timber.d("mRecipelist que paso es: " + recipe);
                 Timber.d("mRecipeList is: " + recipe.toString());
-                intent.putExtra("mRecipeList", recipe);
+                intent.putExtra(Constants.RECIPE_KEY, recipe);
                 mContext.getApplicationContext().startActivity(intent);
                 //mContext.startActivity(intent);
 
