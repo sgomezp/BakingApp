@@ -27,8 +27,6 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
     public static List<Ingredient> mIngredientList;
     Bundle dataIngredients = new Bundle();
 
-    //public IngredientStepAdapter mStepAdapter;
-    //public RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

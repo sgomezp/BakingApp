@@ -135,23 +135,15 @@ public class RecipeAdapter  extends RecyclerView.Adapter<RecipeAdapter.ViewHolde
             // gets item position
             int position = getAdapterPosition();
             Recipe recipe = mRecipeList.get(position);
+
             // Check if an item was deleted, but user clicked it before the UI removed it
             // We can access the data within the views
             if (position != RecyclerView.NO_POSITION){
                 Intent intent = new Intent(mContext.getApplicationContext(), DetailActivity.class);
-                //Intent intent = new Intent(mContext, DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                //intent.putExtra("position", position);
-                Timber.d("position que estoy pasando: " + position);
-
-
-                //intent.putExtra("position", position);
-
-                Timber.d("mRecipelist que paso es: " + recipe);
-                Timber.d("mRecipeList is: " + recipe.toString());
                 intent.putExtra(Constants.RECIPE_KEY, recipe);
                 mContext.getApplicationContext().startActivity(intent);
-                //mContext.startActivity(intent);
+
 
             }
 

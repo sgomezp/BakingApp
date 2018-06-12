@@ -1,7 +1,6 @@
 package com.example.android.bakingapp.ui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,44 +18,33 @@ import com.example.android.bakingapp.adapters.StepAdapter;
 import com.example.android.bakingapp.model.Ingredient;
 import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
-import com.example.android.bakingapp.utils.ApiClient;
-import com.example.android.bakingapp.utils.ApiInterface;
 
-import java.nio.channels.NotYetConnectedException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindString;
-import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import timber.log.Timber;
-
-import static com.example.android.bakingapp.ui.DetailActivity.mIngredientList;
-import static com.example.android.bakingapp.ui.DetailActivity.mStepList;
 
 public class MainFragment extends Fragment {
 
     private MainActivity mParentActivity;
-    private Boolean mTablet;
+    //private Boolean mTablet;
     public StepAdapter mStepAdapter;
     public IngredientAdapter mIngredientAdapter;
 
 
-    public List<Step> mSteps;
+    //private List<Step> mSteps;
     public Recipe recipeSelected = null;
 
     RecyclerView.LayoutManager layoutManager;
+    RecyclerView.LayoutManager layoutManagerSteps;
 
-    @BindView(R.id.tv_ingredients)
+    //@BindView(R.id.tv_ingredients)
     TextView mTvIngredients;
 
     //@BindView(R.id.rv_ingredients)
     RecyclerView recyclerViewIngredients;
 
-    @BindView(R.id.rv_ingredients_steps)
-    RecyclerView recyclerView;
+    //@BindView(R.id.rv_ingredients_steps)
+    RecyclerView recyclerViewSteps;
 
     @BindString(R.string.display_ingredient)
     String mDisplayIngredient;
@@ -64,6 +52,8 @@ public class MainFragment extends Fragment {
     // calls a method in the host activity named on RecipeSelected
     OnStepClickListener mCallback;
     private List<Ingredient> mIngredients;
+    private List<Step> mSteps;
+
 
     // Mandatory Empty Constructor
     public MainFragment(){}
@@ -91,11 +81,36 @@ public class MainFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         //displayRecipeIngredients();
 
-        recyclerViewIngredients = rootView.findViewById(R.id.rv_ingredients);
+
+        TextView mTvIngredients = rootView.findViewById(R.id.tv_ingredients);
+
+        //recyclerViewIngredients = rootView.findViewById(R.id.rv_ingredients);
         Bundle dataIngredients = getArguments();
         recipeSelected = dataIngredients.getParcelable("dataIngredients");
         mIngredients = recipeSelected.getIngredients();
 
+        StringBuilder ingredientString = new StringBuilder();
+
+        for (Ingredient mIng : mIngredients) {
+            String ingredientName = mIng.getIngredient();
+            float ingredientQuantity = mIng.getQuantity();
+            String ingredientMeasure = mIng.getMeasure();
+
+            ingredientString.append(ingredientQuantity);
+            ingredientString.append(" ");
+            ingredientString.append(ingredientMeasure.toLowerCase());
+            ingredientString.append(" ");
+            ingredientString.append(ingredientName);
+            ingredientString.append("\n");
+
+
+        }
+        mTvIngredients.setText(ingredientString);
+
+
+        // Para los steps
+        recyclerViewSteps = rootView.findViewById(R.id.rv_steps);
+        mSteps = recipeSelected.getSteps();
 
 
 
@@ -107,31 +122,12 @@ public class MainFragment extends Fragment {
         //layoutManager = new LinearLayoutManager(getContext());
         //recyclerView.setLayoutManager(layoutManager);
 
-        //Creates the adapter
-        // This adapter takes in the context shows the ingredients and steps
 
-        // Set the adapter to the RecyclerView
+        //displayRecipeIngredientsOld();
+        displayRecipeSteps();
 
-        displayRecipeIngredients();
-
-
-
-        // Set a click listener on the RecyclerView and trigger the callback onRecipeSelected
-        // when an item is clicked
-
-
-        //Load recipe data
-        //loadIngredientData();
-
-        //loadStepData();
-
-
-        //***************************
-
-        //mTvIngredients = (TextView) rootView.findViewById(R.id.tv_ingredients);
-
-
-        recyclerViewIngredients.setOnClickListener(new View.OnClickListener() {
+        // Este hay que ponerlo para los Steps. No para Ingredientes
+        /*recyclerViewIngredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTablet = ((DetailActivity) getActivity()).isTablet();
@@ -148,46 +144,28 @@ public class MainFragment extends Fragment {
                 }
 
             }
-        });
+        });*/
 
         //mTvTextFragment.setText("Esta es la lista de recetas y steps");
         return rootView;
 
     }
 
-    private void displayRecipeIngredientsOld() {
-
-        StringBuilder ingredientString = new StringBuilder();
-
-        for (Ingredient ingredient : mIngredients) {
-            ingredientString.append(
-                    String.format(
-                            mDisplayIngredient,
-                            ingredient.getIngredient(),
-                            Double.toString(ingredient.getQuantity()),
-                            ingredient.getMeasure().toLowerCase()
-                    )
-            );
-        }
-
-        mTvIngredients.setText(ingredientString.toString());
-
-    }
 
     public void displayRecipeSteps() {
-        RecyclerView.LayoutManager layoutManagerSteps = new LinearLayoutManager(mParentActivity);
-        recyclerView.setLayoutManager(layoutManagerSteps);
-
+        layoutManagerSteps = new LinearLayoutManager(getActivity());
         //Set the adapter
-        mStepAdapter = new StepAdapter(mStepList,
-                R.layout.list_item_ingredient, getContext());
-        recyclerView.setAdapter(mStepAdapter);
+        mStepAdapter = new StepAdapter(mSteps,
+                R.layout.list_item_step, getContext());
+        recyclerViewSteps.setAdapter(mStepAdapter);
+        recyclerViewSteps.setLayoutManager(layoutManagerSteps);
+        recyclerViewSteps.setHasFixedSize(true);
         mStepAdapter.updateRecyclerSteps(mSteps);
 
 
     }
 
-    public void displayRecipeIngredients() {
+   /* public void displayRecipeIngredients() {
         layoutManager = new LinearLayoutManager(getActivity());
         //Set the adapter
         mIngredientAdapter = new IngredientAdapter(mIngredients,
@@ -198,90 +176,8 @@ public class MainFragment extends Fragment {
         mIngredientAdapter.updateRecyclerIngredients(mIngredients);
 
 
-    }
+    }*/
 
-    public void loadStepData() {
-
-        try {
-
-            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-            Call<ArrayList<Step>> call = apiService.getSteps();
-
-            call.enqueue(new Callback<ArrayList<Step>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Step>> call, Response<ArrayList<Step>> response) {
-                    int statusCode = response.code();
-
-                    if (response.isSuccessful()) {
-                        mStepList = response.body();
-
-                        if (mStepAdapter == null) {
-                            recyclerView.setAdapter(new StepAdapter(mStepList,
-                                    R.layout.list_item_ingredient, getContext()));
-                            recyclerView.setHasFixedSize(false);
-                        } else {
-                            mStepAdapter.updateRecyclerSteps(mStepList);
-                            mStepAdapter.notifyDataSetChanged();
-                        }
-
-                    } else {
-                        Timber.d("onResponse: StatusCode; " + statusCode);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<Step>> call, Throwable t) {
-                    Timber.d("onResponse: Error en Failure; ");
-
-                }
-            });
-        } catch (NotYetConnectedException e) {
-            Timber.d("loadRecipeData: No connectivity: " + e.getMessage());
-        }
-    }
-
-    public void loadIngredientData() {
-
-        try {
-
-            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-            Call<ArrayList<Ingredient>> call = apiService.getIngredients();
-
-            call.enqueue(new Callback<ArrayList<Ingredient>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Ingredient>> call, Response<ArrayList<Ingredient>> response) {
-                    int statusCode = response.code();
-
-                    if (response.isSuccessful()) {
-                        Timber.d("response was successful");
-                        mIngredientList = response.body();
-
-                        if (mIngredientAdapter == null) {
-                            Timber.d("mIngredientAdapter is null: " + mIngredientAdapter);
-                            recyclerView.setAdapter(new IngredientAdapter(
-                                    mIngredientList, R.layout.list_item_ingredient, getContext()));
-                            Timber.d("mIngredientAdapter is: " + mIngredientAdapter);
-                            recyclerView.setHasFixedSize(false);
-                        } else {
-                            mIngredientAdapter.updateRecyclerIngredients(mIngredientList);
-                            mIngredientAdapter.notifyDataSetChanged();
-                        }
-
-                    } else {
-                        Timber.d("onResponse: StatusCode; " + statusCode);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<Ingredient>> call, Throwable t) {
-                    Timber.d("onResponse: Error en Failure; ");
-
-                }
-            });
-        } catch (NotYetConnectedException e) {
-            Timber.d("loadRecipeData: No connectivity: " + e.getMessage());
-        }
-    }
 
     public interface OnStepClickListener {
         void onStepSelected(int position);

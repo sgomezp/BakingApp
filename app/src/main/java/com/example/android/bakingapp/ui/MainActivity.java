@@ -50,10 +50,6 @@ public class MainActivity extends AppCompatActivity {
         //Load recipe data
 
         mRecipeList = loadRecipeData();
-        //Timber.d("mRecipeList: " + mRecipeList.toString());
-
-
-
 
     }
 

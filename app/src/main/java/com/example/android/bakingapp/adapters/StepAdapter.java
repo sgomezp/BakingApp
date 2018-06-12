@@ -40,7 +40,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
     public StepAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item_step, parent, false);
+        View view = inflater.inflate(mGridLayout, parent, false);
         return new StepAdapter.ViewHolder(view);
     }
 
