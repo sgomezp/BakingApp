@@ -1,37 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/margin_10"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tv_ingredients"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_margin" />
+        android:layout_marginBottom="@dimen/margin_10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/Ingredients_label"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="@string/ingredients_label" />
 
 
-    <FrameLayout
-        android:id="@+id/steps_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="@dimen/activity_margin" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_steps"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/activity_margin">
+            android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
 
-    </FrameLayout>
 
-</LinearLayout>
+    </LinearLayout>
 
+</android.support.v4.widget.NestedScrollView>
 
 
 

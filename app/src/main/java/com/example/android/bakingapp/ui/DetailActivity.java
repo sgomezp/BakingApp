@@ -14,8 +14,6 @@ import com.example.android.bakingapp.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-import timber.log.Timber;
-
 public class DetailActivity extends AppCompatActivity implements MainFragment.OnStepClickListener {
 
     // Track whether to display a two-pane or single-pane UI
@@ -25,6 +23,7 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
     public static Recipe mRecipes;
     public static ArrayList<Step> mStepList;
     public static List<Ingredient> mIngredientList;
+    private FragmentManager mFragmentManager;
     Bundle dataIngredients = new Bundle();
 
 
@@ -38,23 +37,28 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
 
         dataIngredients.putParcelable("dataIngredients", mRecipes);
 
-        MainFragment mainFragment = new MainFragment();
-        mainFragment.setArguments(dataIngredients);
+        mFragmentManager = getSupportFragmentManager();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.ingredients_framelayout, mainFragment)
-                .commit();
+        if (savedInstanceState == null) {
 
-        if (findViewById(R.id.container) != null) {
-            mTabletMode = true;
-            DetailFragment detailFragment = new DetailFragment();
-            detailFragment.setArguments(dataIngredients);
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager
+            MainFragment mainFragment = new MainFragment();
+            mainFragment.setArguments(dataIngredients);
+
+            mFragmentManager
                     .beginTransaction()
-                    .add(R.id.container, detailFragment)
+                    .add(R.id.ingredients_framelayout, mainFragment)
                     .commit();
+
+            if (findViewById(R.id.container) != null) {
+                mTabletMode = true;
+                DetailFragment detailFragment = new DetailFragment();
+                detailFragment.setArguments(dataIngredients);
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager
+                        .beginTransaction()
+                        .add(R.id.container, detailFragment)
+                        .commit();
+            }
         }
     }
 
@@ -73,7 +77,7 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
     }
 
     public void replaceFragment() {
-        Timber.d("replace");
+
         DetailFragment detailFragment = new DetailFragment();
         detailFragment.setArguments(dataIngredients);
         getSupportFragmentManager().beginTransaction()
