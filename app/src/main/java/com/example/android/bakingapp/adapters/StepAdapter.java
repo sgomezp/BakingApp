@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.ui.DetailsActivitySteps;
+import com.example.android.bakingapp.utils.Constants;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
     private List<Step> mStepList;
     private Context mContext;
     private int mGridLayout;
+    public Boolean mTableMode;
+
 
 
     public StepAdapter(List<Step> steps,
@@ -101,16 +104,17 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.ViewHolder> {
         public void onClick(View view) {
             // gets item position
             int position = getAdapterPosition();
+            Step step = mStepList.get(position);
             // Check if an item was deleted, but user clicked it before the UI removed it
             // We can access the data within the views
             if (position != RecyclerView.NO_POSITION) {
                 Intent intent = new Intent(mContext.getApplicationContext(), DetailsActivitySteps.class);
+
                 //Intent intent = new Intent(mContext, DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                //intent.putExtra("position", position);
-                intent.putExtra("position", position);
+                intent.putExtra(Constants.INTENT_KEY_SELECTED_STEP, step);
                 mContext.getApplicationContext().startActivity(intent);
-                //mContext.startActivity(intent);
+
 
             }
 

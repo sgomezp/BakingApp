@@ -4,14 +4,13 @@
     android:id="@+id/layout_steps"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_margin"
+    android:layout_margin="@dimen/margin_10"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/short_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_10"
         tools:text="Short description Step" />
 
 </LinearLayout>

@@ -11,7 +11,6 @@ import com.example.android.bakingapp.model.Recipe;
 import com.example.android.bakingapp.model.Step;
 import com.example.android.bakingapp.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements MainFragment.OnStepClickListener {
@@ -19,12 +18,15 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
     // Track whether to display a two-pane or single-pane UI
     // A single-pane display refers to phone screens, and two-pane to larger tablet screens
 
-    private Boolean mTabletMode = false;
+    public static List<Step> mStepList;
     public static Recipe mRecipes;
-    public static ArrayList<Step> mStepList;
+    public static Step mSteps;
     public static List<Ingredient> mIngredientList;
-    private FragmentManager mFragmentManager;
+    public Boolean mTabletMode = false;
     Bundle dataIngredients = new Bundle();
+    public FragmentManager mFragmentManager;
+    Bundle dataSteps = new Bundle();
+
 
 
     @Override
@@ -33,9 +35,13 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
         setContentView(R.layout.activity_detail);
 
         mRecipes = getIntent().getExtras().getParcelable(Constants.RECIPE_KEY);
+        //mSteps = getIntent().getExtras().getParcelable(Constants.INTENT_KEY_SELECTED_STEP);
+        mSteps = getIntent().getExtras().getParcelable(Constants.INTENT_KEY_SELECTED_STEP);
+
 
 
         dataIngredients.putParcelable("dataIngredients", mRecipes);
+        dataSteps.putParcelable("dataSteps", mSteps);
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -51,13 +57,18 @@ public class DetailActivity extends AppCompatActivity implements MainFragment.On
 
             if (findViewById(R.id.container) != null) {
                 mTabletMode = true;
-                DetailFragment detailFragment = new DetailFragment();
-                detailFragment.setArguments(dataIngredients);
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager
+                /*Timber.d("estoy en modo table y dataStep es: " + dataSteps.toString());
+                // Cambio DetailFragment por MainFragment. Ahora lo cambio por StepFragment
+                StepFragment stepFragment = new StepFragment();
+                stepFragment.setArguments(dataIngredients);
+
+                mFragmentManager
                         .beginTransaction()
-                        .add(R.id.container, detailFragment)
-                        .commit();
+                        .add(R.id.container, stepFragment)
+                        .commit();*/
+
+
+
             }
         }
     }

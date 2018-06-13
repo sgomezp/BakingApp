@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Fragment layout that display The Video and Steps or instructions for the recipe-->
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout_video_steps_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_margin"
         android:orientation="vertical">
 
-       <!-- <LinearLayout
+        <LinearLayout
             android:id="@+id/layout_video"
             android:layout_width="match_parent"
             android:layout_height="300dp"
+            android:layout_margin="@dimen/margin_10"
             android:orientation="vertical">
 
             <com.google.android.exoplayer2.ui.SimpleExoPlayerView
@@ -34,16 +34,28 @@
                 android:src="@drawable/default_placeholder" />
 
         </LinearLayout>
--->
+
+
         <TextView
-            android:id="@+id/tv_step"
+            android:id="@+id/short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
-            tools:text="Videos y descripcion Fragment Detail" />
+            tools:text="Short description Step" />
+
+        <TextView
+            android:id="@+id/tv_step_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:gravity="center_vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            tools:text="Description" />
 
     </LinearLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
